@@ -1,6 +1,4 @@
 # Pandemic-Simulation
-#### Video Demo: https://www.youtube.com/watch?v=wliG1CB4PwE
-
 ---
 
 
