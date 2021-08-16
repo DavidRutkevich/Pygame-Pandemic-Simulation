@@ -5,10 +5,7 @@ import random
 
 """
 IDEE = https://www.youtube.com/watch?v=gxAaO2rsdIs&ab_channel=3Blue1Brown
-PyGame tutorial = https://youtu.be/UZg49z76cLw
-Ziel = https://www.washingtonpost.com/graphics/2020/world/corona-simulator/ 
-Evtl. Später Implementierung SIR Modell = https://www.youtube.com/watch?v=Qrp40ck3WpI&ab_channel=Dr.TreforBazettDr.TreforBazett
-wahrscheinlich in Jupyter
+       https://www.washingtonpost.com/graphics/2020/world/corona-simulator/ 
 
 Motivation:  Ich wollte die interaktive Simulation aus der washingtonpost schon lange in Python
 implementieren hatte nur nie die Motivation dazu. Hier hat die Einsteigeraufgabe gut geholfen :)
@@ -17,23 +14,18 @@ Das Fenster ist nicht dynamisch, deshalb würde ich emfehlen die Simulation nur 
 zu nutzen. Sonst kann das Fenster in l.107 verändert werden. Falls ich den Graphen noch schaffe, muss man 
 in l.150 die größen auch noch verändern, oder bei Objektdekleration. 
 
-Wenn ich noch Zeit habe werde ich eine Dokumentation schreiben, bis dahin bin ich hoffentlich 
-immer erreichbar unter. Verbesserungsvorschläge sind immer Wilkommen
-  // E-Mail : david-linus.rutkevich@ueg-leer.net  || Discord : Anthonio#3372"""
-#TODO Klassenname guy + neu_guy umändern zu Person oder Sprite
-#TODO Farben sind ZU SCHWACH
+"""
 
 
+SCHWARZ = (18, 18, 18) 
+GESUND_FARBE = (55, 0, 179) 
+KRANK_FARBE = (144, 12, 63)
+GENESEN_FARBE = (3, 218, 186) 
+TOD_FARBE = (128,0,128)
+STATISTICS_BG = SCHWARZ 
 
-SCHWARZ = (18, 18, 18) #Material Design https://material.io/design/color/dark-theme.html
-GESUND_FARBE = (55, 0, 179) #Blau Material Design https://material.io/design/color/dark-theme.html
-KRANK_FARBE = (144, 12, 63) #Rot https://htmlcolorcodes.com/
-GENESEN_FARBE = (3, 218, 186) #Grün Material Design https://material.io/design/color/dark-theme.html
-TOD_FARBE = (128,0,128) # Quelle Nordtheme https://www.nordtheme.com/
-STATISTICS_BG = SCHWARZ #Hellgrau Quelle Nordtheme https://www.nordtheme.com/
-
-FPS = 45 #Kann Simulationsgeschwindigkeit steuern. Ich verkaufe es nocht nicht als feature
-GUY_SPEED = 2 #TODO Konnte noch keine elegante Lösung finden. Bitte bei zwei belassen und FPS nutzen
+FPS = 45 
+GUY_SPEED = 2 
 
 HINTERGRUND = SCHWARZ
 
@@ -70,7 +62,7 @@ class Person(pygame.sprite.Sprite):
 
         x, y = self.pos
 
-        #PBC TODO Irgendwann mal Vel spiegeln also *= -1 als switch wäre dies nice
+       
         if x < 0:
             self.pos[0] = self.BREITE
             x = self.BREITE
@@ -103,11 +95,11 @@ class Person(pygame.sprite.Sprite):
                 self.entscheidung = False #man kann leider nur einmal leben :(
                 x_zufaellig = np.random.rand() #Eine Zahl zwischen 0 und 1 wird gewählt sterberate chance, dass Statement ll Wahr ist
                 if self.sterberate >= x_zufaellig:
-                    self.kill() #Aus PyGame Library / Sprite class
+                    self.kill()
                 else:
                     self.genesen = True
 
-    def respawn(self, farbe, radius=3): #TODO del radius
+    def respawn(self, farbe, radius=3):
         return Person( #Erstellt Kopie von Person, nur farbe wird geändert
             self.rect.x,
             self.rect.y,
@@ -194,7 +186,7 @@ class Simulation:
             self.alle_container.update()#Alle Personen werden aktualisiert
 
             screen.fill(HINTERGRUND)
-            #Bevor Infektionen gecheckt werden. Beste Lösung keine Ahnung TODO Reihenfolge ändern um output zu sehen
+            
 
             #Aktualisierung von Statistiken
 
