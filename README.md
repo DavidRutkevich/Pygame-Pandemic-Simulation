@@ -11,6 +11,8 @@
 
 ## Description:
 
+### Project for an student hackathon in germany so the comments are in german.
+
 A Human is represented by a circle, the state of each Human at an given time is represented by its color. 
 * **Red** = Infected 
 * **Blue** = Not infected
