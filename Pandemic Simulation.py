@@ -58,7 +58,7 @@ class Person(pygame.sprite.Sprite):
 
     def update(self):
 
-        self.pos += self.vel #Distanz pro Frame
+        self.pos += self.vel 
 
         x, y = self.pos
 
@@ -88,25 +88,25 @@ class Person(pygame.sprite.Sprite):
             self.vel += np.random.rand(GUY_SPEED) * GUY_SPEED - GUY_SPEED / 2
 
 
-        #Jedes mal wenn Person aktualisiert wird
+ 
         if self.entscheidung:
             self. updates_bis_Entscheidung -= 1
             if self.updates_bis_Entscheidung <= 0:
-                self.entscheidung = False #man kann leider nur einmal leben :(
-                x_zufaellig = np.random.rand() #Eine Zahl zwischen 0 und 1 wird gewählt sterberate chance, dass Statement ll Wahr ist
+                self.entscheidung = False 
+                x_zufaellig = np.random.rand() 
                 if self.sterberate >= x_zufaellig:
                     self.kill()
                 else:
                     self.genesen = True
 
     def respawn(self, farbe, radius=3):
-        return Person( #Erstellt Kopie von Person, nur farbe wird geändert
+        return Person(
             self.rect.x,
             self.rect.y,
             self.BREITE,
             self.HOEHE,
             farbe=farbe,
-            velocity=self.vel, #TODO evtl. schneller machen
+            velocity=self.vel,
         )
     def tod_oder_genesen(self, updates_bis_Entscheidung=200, sterberate=0.2):
         self.entscheidung = True
@@ -122,9 +122,9 @@ class Simulation:
         self.gesund_container = pygame.sprite.Group()
         self.infiziert_container = pygame.sprite.Group()
         self.genesen_container = pygame.sprite.Group()
-        self.alle_container = pygame.sprite.Group() #Um alle aufeinamal zu aktualisieren
+        self.alle_container = pygame.sprite.Group() 
 
-        self.x_gesund = 69 #Manchmal bin ich einfach zu lustig
+        self.x_gesund = 69 
         self.x_infiziert = 1
         self.x_still = 0
         self.inf_vel = 2
@@ -157,7 +157,7 @@ class Simulation:
                 self.gesund_container.add(guy)
 
 
-        #erstellen von Infizierten
+       
         for i in range(self.x_infiziert):
             x = np.random.randint(0, self.BREITE + 1)
             y = np.random.randint(0, self.HOEHE + 1)
@@ -171,29 +171,29 @@ class Simulation:
 
         statistics = pygame.Surface((self.BREITE // 4, self.HOEHE // 4))
 
-        #Initialisierung von Fläche Graph
+        
         statistics.fill(STATISTICS_BG)
-        statistics.set_alpha(130) #Durchsichtigkeit kann evtl. nicht funktionieren ist 50 / 50 bei mir
+        statistics.set_alpha(130) 
         statistics_position = (self.BREITE // 40, self.HOEHE //40)
 
-        clock = pygame.time.Clock() #Um Frames zu bestimmen
+        clock = pygame.time.Clock() 
 
         for i in range(self.T):
-            for event in pygame.event.get(): #Schaut ob X geklickt wurde
+            for event in pygame.event.get(): 
                 if event.type == pygame.QUIT:
-                    sys.exit()#Besser als exit() aus standard
+                    sys.exit()
 
-            self.alle_container.update()#Alle Personen werden aktualisiert
+            self.alle_container.update()
 
             screen.fill(HINTERGRUND)
             
 
-            #Aktualisierung von Statistiken
+            
 
             statistics_hoehe = statistics.get_height()
             statistics_breite = statistics.get_width()
-            x_Infiziert_t = len(self.infiziert_container) #Anzahl Personen, die jetzt infiziert werden
-            x_sprites_t = len(self.alle_container) #Anzahl alle Personen -> leider sterben personen hier
+            x_Infiziert_t = len(self.infiziert_container) 
+            x_sprites_t = len(self.alle_container)
             x_genesen_t = len(self.genesen_container)
 
             #Hier kein Plot, sondern Array
