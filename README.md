@@ -25,9 +25,9 @@ The Graph shows the amount of humans in a specific state at a given time.
 * **Purple** = Dead
 * **Green** = Recovered
 
-You can customize the time and speed by changing the values of FPS (l.32), the T attribute or the velocity of the Persons.
+You can customize the time and speed by changing the values of the T or the velocity attribute of the Persons class.
 
-**Note that changing T(time) and FPS will impact the generation of the graph**
+**Note that changing T(time) will impact the generation of the graph**
 
 ---
 
