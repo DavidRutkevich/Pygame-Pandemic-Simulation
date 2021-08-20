@@ -3,20 +3,6 @@ import numpy as np
 import math
 import random
 
-"""
-IDEE = https://www.youtube.com/watch?v=gxAaO2rsdIs&ab_channel=3Blue1Brown
-       https://www.washingtonpost.com/graphics/2020/world/corona-simulator/ 
-
-Motivation:  Ich wollte die interaktive Simulation aus der washingtonpost schon lange in Python
-implementieren hatte nur nie die Motivation dazu. Hier hat die Einsteigeraufgabe gut geholfen :)
-
-Das Fenster ist nicht dynamisch, deshalb würde ich emfehlen die Simulation nur auf großen Bildschirmen 
-zu nutzen. Sonst kann das Fenster in l.107 verändert werden. Falls ich den Graphen noch schaffe, muss man 
-in l.150 die größen auch noch verändern, oder bei Objektdekleration. 
-
-"""
-
-
 SCHWARZ = (18, 18, 18) 
 GESUND_FARBE = (55, 0, 179) 
 KRANK_FARBE = (144, 12, 63)
@@ -196,17 +182,13 @@ class Simulation:
             x_sprites_t = len(self.alle_container)
             x_genesen_t = len(self.genesen_container)
 
-            #Hier kein Plot, sondern Array
-            t = int((i/self.T) * statistics_breite) #t ist x-Wert des graphen self.T/i = Wie weit sind wir in der Sim?
-            # wir gehen von unten nach oben, um zu wissen wie hoch man gehen muss, muss man die infizierten abziehen. Es ist ja keine Gerade
-            #Tipp: Einfach Live-Ansehen. Zufällige Gedanken bringen einem immer die besten Ideen
+  
+            t = int((i/self.T) * statistics_breite)
             y_infiziert = int(statistics_hoehe-(x_Infiziert_t / x_sprites_t)* statistics_hoehe)
-            #Von oben nach unten, also muss man nichts von hoehe abziehen
-            y_tod = int(((self.ALLE - x_sprites_t) / self.ALLE) * statistics_hoehe ) #(...) Alle die Tod sind
+            y_tod = int(((self.ALLE - x_sprites_t) / self.ALLE) * statistics_hoehe )
             y_genesen = int((x_genesen_t / x_sprites_t) * statistics_hoehe)
             statistics_Funktion = pygame.PixelArray(statistics)
 
-            #Tod ganz oben, dann Genesen und dan Infiziert
             statistics_Funktion[t, y_infiziert:] = pygame.Color(*KRANK_FARBE)
             statistics_Funktion[t, :y_tod] = pygame.Color(*TOD_FARBE)
             statistics_Funktion[t, y_tod:y_tod + y_genesen] = pygame.Color(GENESEN_FARBE)
@@ -214,40 +196,40 @@ class Simulation:
 
 
 
-            #Neue Infektionen
+        
             kollisions_gruppe = pygame.sprite.groupcollide(
-                self.gesund_container,#Hat ein Gesunder einen Infizierten berührt?
+                self.gesund_container,
                 self.infiziert_container,
-                True, #Die aus dem gesund_container werden entfernt
-                False #Die aus dem infiziert_contaienr bleiben
+                True,
+                False 
             )
             for guy in kollisions_gruppe:
                 neu_guy = guy.respawn(KRANK_FARBE)
-                neu_guy.vel *= -1 #Eigentlich egal, aber so kann man kollisionen besser erkennen.
+                neu_guy.vel *= -1 
                 neu_guy.tod_oder_genesen(self.zeit_bis_Entscheidung, self.sterberate)
                 self.infiziert_container.add(neu_guy)
                 self.alle_container.add(neu_guy)
 
-            #Genesungen? else bei update
+           
             genesen_list = []
             for guy in self.infiziert_container:
                 if guy.genesen:
                     neu_guy =  guy.respawn(GENESEN_FARBE)
                     self.genesen_container.add(neu_guy)
                     self.alle_container.add(neu_guy)
-                    genesen_list.append(guy) #So kann man sie aus der Grupper der Infizierten entfernen
+                    genesen_list.append(guy) 
 
                 if len(genesen_list) > 0:
                     self.infiziert_container.remove(*genesen_list)
-                    self.alle_container.remove(*genesen_list) #Die alten werden ja ersetzt
+                    self.alle_container.remove(*genesen_list) 
 
 
 
 
             self.alle_container.draw(screen)
-            del statistics_Funktion #pygame.pyxel verankert das Fenster des Graphen
+            del statistics_Funktion 
             statistics.unlock()
-            screen.blit(statistics, statistics_position) #An der Statistikposition wird gezeichnet
+            screen.blit(statistics, statistics_position) 
             pygame.display.set_caption("""                                                                                                             
                                           Epidemie Simulation""")
             pygame.display.flip()
@@ -256,7 +238,7 @@ class Simulation:
 
 
 if __name__ == '__main__':
-    #name vom Virus + Attribute ist echt praktisch
+   
     covid = Simulation()
     covid.x_gesund = 400
     covid.x_infiziert = 600
