@@ -10,8 +10,7 @@
 
 
 ## Description:
-
-### Project for an student hackathon in germany so the comments are in german.
+* Some Variable and function names are in german *
 
 
 
