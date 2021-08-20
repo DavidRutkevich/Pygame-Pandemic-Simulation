@@ -10,7 +10,7 @@
 
 
 ## Description:
-* Some Variable and function names are in german *
+** Some Variable and function names are in german **
 
 
 
